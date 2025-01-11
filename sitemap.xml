@@ -15,22 +15,22 @@
 <url>
   <loc>https://yeranonyram.github.io/JuegoDePreguntasRapidas/menu/Juegos.html</loc>
   <lastmod>2025-01-11T10:44:43+00:00</lastmod>
-  <priority>0.80</priority>
+  <priority>1.00</priority>
 </url>
 <url>
   <loc>https://yeranonyram.github.io/JuegoDePreguntasRapidas/menu/resultados.html</loc>
   <lastmod>2025-01-11T10:44:43+00:00</lastmod>
-  <priority>0.70</priority>
+  <priority>0.90</priority>
 </url>
 <url>
   <loc>https://yeranonyram.github.io/JuegoDePreguntasRapidas/menu/temasDisponibles.html</loc>
   <lastmod>2025-01-11T10:44:43+00:00</lastmod>
-  <priority>0.60</priority>
+  <priority>0.80</priority>
 </url>
 <url>
   <loc>https://yeranonyram.github.io/JuegoDePreguntasRapidas/menu/tienda.html</loc>
   <lastmod>2025-01-11T10:44:43+00:00</lastmod>
-  <priority>0.50</priority>
+  <priority>0.70</priority>
 </url>
 <url>
   <loc>https://yeranonyram.github.io/JuegoDePreguntasRapidas/menu/soporte.html</loc>
@@ -40,11 +40,11 @@
 <url>
   <loc>https://yeranonyram.github.io/JuegoDePreguntasRapidas/menu/verEstadisticas.html</loc>
   <lastmod>2025-01-11T10:44:43+00:00</lastmod>
-  <priority>0.50</priority>
+  <priority>0.70</priority>
 </url>
 <url>
   <loc>https://yeranonyram.github.io/JuegoDePreguntasRapidas/menu/contacto.html</loc>
   <lastmod>2025-01-11T10:44:43+00:00</lastmod>
-  <priority>0.40</priority>
+  <priority>0.60</priority>
 </url>
 </urlset>
