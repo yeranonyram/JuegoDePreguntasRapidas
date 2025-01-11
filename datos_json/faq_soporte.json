@@ -1,0 +1,30 @@
+{
+    "faq": [
+      {
+        "id": 1,
+        "pregunta": "¿Cómo cambiar la configuración del juego?",
+        "respuesta": "Puedes cambiar la configuración del juego desde el menú de opciones. Simplemente haz clic en el ícono de engranaje en la esquina superior derecha y selecciona la opción de configuración."
+      },
+      {
+        "id": 2,
+        "pregunta": "¿Cómo recuperar mi progreso en el juego?",
+        "respuesta": "Si has iniciado sesión con tu cuenta, el progreso del juego se guardará automáticamente. Si no, puedes sincronizar tu progreso en cualquier momento desde el menú de usuario."
+      },
+      {
+        "id": 3,
+        "pregunta": "¿Cómo reportar un error o problema técnico?",
+        "respuesta": "Si encuentras un error en el juego, puedes reportarlo desde el menú de soporte. Proporciona una descripción detallada del problema y, si es posible, una captura de pantalla."
+      },
+      {
+        "id": 4,
+        "pregunta": "¿Cómo puedo obtener más ayuda?",
+        "respuesta": "Para obtener más ayuda, puedes visitar nuestra sección de preguntas frecuentes o ponerte en contacto con nuestro equipo de soporte mediante el formulario de contacto."
+      }
+    ],
+    "configuraciones": {
+      "sonido": true,
+      "notificaciones": false,
+      "lenguaje": "es"
+    }
+  }
+  

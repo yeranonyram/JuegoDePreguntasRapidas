@@ -1,0 +1,32 @@
+[
+    {
+        "nombre": "Cultura General",
+        "link": "../juegos/cultura_general.html",
+        "contenido": "Pon a prueba tus conocimientos generales en temas variados como arte, historia, literatura y geografía."
+    },
+    {
+        "nombre": "Matemáticas",
+        "link": "../juegos/matematicas.html",
+        "contenido": "Resuelve preguntas matemáticas de álgebra, geometría y más. ¡Hazlo lo más rápido posible!"
+    },
+    {
+        "nombre": "Historia Universal",
+        "link": "../juegos/historia.html",
+        "contenido": "Demuestra cuánto sabes sobre eventos históricos importantes que han marcado al mundo."
+    },
+    {
+        "nombre": "Cine y Series",
+        "link": "../juegos/cine_series.html",
+        "contenido": "Responde preguntas sobre tus películas y series favoritas, actores y directores famosos."
+    },
+    {
+        "nombre": "Deportes",
+        "link": "../juegos/deportes.html",
+        "contenido": "Pon a prueba tus conocimientos deportivos. Responde preguntas sobre fútbol, baloncesto, tenis, y más."
+    },
+    {
+        "nombre": "Misterios y Crímenes",
+        "link": "../juegos/misterios_crimenes.html",
+        "contenido": "Resuelve casos misteriosos, aprende sobre crímenes históricos y conviértete en un detective."
+    }
+]   

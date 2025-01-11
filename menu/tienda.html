@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda de Mejoras</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .item-card {
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            background-color: white;
+        }
+        .item-card .disabled {
+            background-color: #f1f1f1;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <header class="text-center bg-blue-800 py-4 text-white">
+        <h1 class="text-3xl" data-aos="fade-right">Tienda de Mejoras</h1>
+        <p class="text-xl" data-aos="fade-right">Mejoras para mejorar tu experiencia de juego</p>
+    </header>
+
+    <div class="container mx-auto py-8 ">
+
+        <div id="tiendaMejoras" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 " data-aos="fade-up">
+            <!-- Las mejoras se cargarán aquí -->
+        </div>
+    </div>
+
+    <script>
+        fetch('../datos_json/tienda_mejoras.json')  
+            .then(response => response.json())
+            .then(data => {
+                const tiendaContainer = document.getElementById('tiendaMejoras');
+                data.mejoras.forEach(mejora => {
+                    const itemCard = document.createElement('div');
+                    itemCard.classList.add('item-card');
+                    itemCard.classList.toggle('disabled', !mejora.disponible);
+                    itemCard.innerHTML = `
+                        <h3 class="text-xl font-bold">${mejora.nombre}</h3>
+                        <p class="text-gray-600">${mejora.descripcion}</p>
+                        <p class="text-lg font-bold mt-2">Precio: $${mejora.precio}</p>
+                        <button class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700 mt-4 ${!mejora.disponible ? 'cursor-not-allowed' : ''}" ${!mejora.disponible ? 'disabled' : ''} onclick="comprarMejora(${mejora.id})">
+                            ${mejora.disponible ? 'Comprar' : 'No Disponible'}
+                        </button>
+                    `;
+
+                    tiendaContainer.appendChild(itemCard);
+                });
+            })
+            .catch(error => console.error('Error al cargar las mejoras:', error));
+        function comprarMejora(id) {
+            alert(`¡Has comprado la mejora con ID: ${id}!`);
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 2000, 
+            easing: 'ease-out', 
+            once: true 
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<translation>
+    <menu>
+        <item>
+            <nombre>Inicio</nombre>
+            <link>index.html</link>
+            
+        </item>
+        <item>
+            <nombre>Iniciar juego</nombre>
+            <link>./menu/Juegos.html</link>
+        </item>
+        <item>
+            <nombre>Resultados</nombre>
+            <link>./menu/resultados.html</link>
+        </item>
+        <item>
+            <nombre>Temas Disponibles</nombre>
+            <link>./menu/temasDisponibles.html</link>
+        </item>
+        <item>
+            <nombre>Tienda de Mejoras</nombre>
+            <link>./menu/tienda.html</link>
+        </item>
+        <item>
+            <nombre>FAQ y Soporte</nombre>
+            <link>./menu/soporte.html</link>
+        </item>
+        <item>
+            <nombre>Estadisticas</nombre>
+            <link>./menu/verEstadisticas.html</link>
+        </item>
+        <item>
+            <nombre>Contacto</nombre>
+            <link>./menu/contacto.html</link>
+        </item>
+
+    </menu>
+</translation>

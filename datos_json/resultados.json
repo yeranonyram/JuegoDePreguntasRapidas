@@ -1,0 +1,53 @@
+{
+    "usuarios": [
+      {
+        "usuario": "Abigail Tacuri",
+        "puntuacion": 100,
+        "logros": [
+          "¡Logro desbloqueado! Respondiste todo correctamente.",
+          "¡Logro desbloqueado! Respondiste sin errores."
+        ]
+      },
+      {
+        "usuario": "Eddy Torrejon",
+        "puntuacion": 80,
+        "logros": [
+          "¡Logro desbloqueado! Respondiste todo correctamente.",
+          "¡Logro desbloqueado! Más de la mitad de las respuestas fueron correctas."
+        ]
+      },
+      {
+        "usuario": "Yerko Flores",
+        "puntuacion": 75,
+        "logros": [
+          "¡Logro desbloqueado! Respondiste todo correctamente.",
+          "¡Logro desbloqueado! Más de la mitad de las respuestas fueron correctas."
+        ]
+      },
+      {
+        "usuario": "Elkinn Flores",
+        "puntuacion": 70,
+        "logros": [
+          "¡Logro desbloqueado! Respondiste todo correctamente.",
+          "¡Logro desbloqueado! Más de la mitad de las respuestas fueron correctas."
+        ]
+      },
+      {
+        "usuario": "Maria Lopez",
+        "puntuacion": 65,
+        "logros": [
+          "¡Logro desbloqueado! Respondiste todo correctamente.",
+          "¡Logro desbloqueado! Más de la mitad de las respuestas fueron correctas."
+        ]
+      },
+      {
+        "usuario": "Paola Guiterrez",
+        "puntuacion": 60,
+        "logros": [
+          "¡Logro desbloqueado! Respondiste todo correctamente.",
+          "¡Logro desbloqueado! Más de la mitad de las respuestas fueron correctas."
+        ]
+      }
+    ]
+  }
+  

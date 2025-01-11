@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Historia General</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .timer {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .result {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <header class="text-center bg-gray-800 py-4 text-white">
+        <h1 class="text-3xl">Juego de Historia General</h1>
+        <p class="text-xl">¡Pon a prueba tus conocimientos históricos!</p>
+    </header>
+
+    <div class="container mx-auto py-8">
+        <!-- Temporizador y Dificultad -->
+        <div class="text-center mb-8">
+            <div class="mb-4">
+                <label for="difficulty" class="text-lg">Selecciona Dificultad:</label>
+                <select id="difficulty" class="form-select w-1/2 mx-auto p-2 mt-2 border border-gray-300 rounded-md">
+                    <option value="easy">Fácil</option>
+                    <option value="medium">Intermedio</option>
+                    <option value="hard">Difícil</option>
+                </select>
+            </div>
+
+            <div id="timer" class="timer text-2xl font-bold mt-4">00:00</div>
+
+            <button id="startBtn" class="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-700 transition duration-300 mt-5">Comenzar Partida</button>
+        </div>
+
+        <!-- Pregunta -->
+        <div class="question-container" id="questionContainer">
+            <!-- Las preguntas se cargarán aquí -->
+        </div>
+
+        <!-- Resultado de la respuesta -->
+        <div id="resultMessage" class="result text-center"></div>
+
+        <!-- Resultado final -->
+        <div id="finalResults" class="hidden text-center mt-6">
+            <h2 class="text-2xl font-bold">¡Has terminado el juego!</h2>
+            <p id="finalScore" class="text-xl"></p>
+            <ul id="achievementList" class="mt-4"></ul>
+            <button id="shareBtn" class="bg-blue-500 text-white py-2 px-4 rounded-md mt-4">Compartir resultado</button>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-end p-2">
+        <a href="../menu/Juegos.html" class="text-decoration-none text-xl text-blue-500 hover:text-blue-700">Volver al Menú</a>
+    </div>
+
+    <script>
+        // Variables de Temporizador y Puntuación
+        let timer;
+        let seconds = 0;
+        let isRunning = false;
+        let correctAnswers = 0; // Contador de respuestas correctas
+        let currentQuestionIndex = 0;
+        const totalQuestions = 5; // Número total de preguntas
+
+        // Preguntas de Historia General
+        const questions = [
+            {
+                question: "¿Quién fue el primer presidente de los Estados Unidos?",
+                options: ["George Washington", "Abraham Lincoln", "Thomas Jefferson", "Theodore Roosevelt"],
+                correctAnswer: "George Washington"
+            },
+            {
+                question: "¿En qué año se comenzó la Revolución Francesa?",
+                options: ["1776", "1789", "1804", "1812"],
+                correctAnswer: "1789"
+            },
+            {
+                question: "¿En qué año terminó la Segunda Guerra Mundial?",
+                options: ["1945", "1939", "1918", "1950"],
+                correctAnswer: "1945"
+            },
+            {
+                question: "¿Qué imperio construyó la Gran Muralla China?",
+                options: ["Imperio Romano", "Imperio Chino", "Imperio Mongol", "Imperio Otomano"],
+                correctAnswer: "Imperio Chino"
+            },
+            {
+                question: "¿Quién fue el líder de la Revolución Rusa de 1917?",
+                options: ["Vladimir Lenin", "Joseph Stalin", "Leon Trotsky", "Mikhail Gorbachev"],
+                correctAnswer: "Vladimir Lenin"
+            }
+        ];
+
+        // Función para iniciar el temporizador
+        function startTimer() {
+            if (!isRunning) {
+                isRunning = true;
+                timer = setInterval(() => {
+                    seconds++;
+                    let min = Math.floor(seconds / 60);
+                    let sec = seconds % 60;
+                    document.getElementById('timer').textContent = `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+                }, 1000);
+            }
+        }
+
+        // Función para detener el temporizador
+        function stopTimer() {
+            clearInterval(timer);
+            isRunning = false;
+        }
+
+        // Cargar la siguiente pregunta
+        function loadQuestion() {
+            if (currentQuestionIndex < questions.length) {
+                const question = questions[currentQuestionIndex];
+                let questionHTML = `
+                    <h3 class="text-2xl font-bold mb-4">${question.question}</h3>
+                    <ul class="space-y-4">
+                        ${question.options.map(option => `
+                            <li>
+                                <button class="bg-gray-200 text-lg p-3 rounded-md w-full hover:bg-gray-400 focus:outline-none" onclick="checkAnswer('${option}')">${option}</button>
+                            </li>
+                        `).join('')}
+                    </ul>
+                `;
+                document.getElementById('questionContainer').innerHTML = questionHTML;
+            } else {
+                showResults(); // Mostrar resultados al finalizar las preguntas
+            }
+        }
+
+        // Verificar respuesta
+        function checkAnswer(selectedAnswer) {
+            const currentQuestion = questions[currentQuestionIndex];
+            if (selectedAnswer === currentQuestion.correctAnswer) {
+                correctAnswers++;
+                document.getElementById('resultMessage').textContent = "¡Correcto!";
+                document.getElementById('resultMessage').classList.add('text-green-500');
+                document.getElementById('resultMessage').classList.remove('text-red-500');
+            } else {
+                document.getElementById('resultMessage').textContent = "¡Incorrecto!";
+                document.getElementById('resultMessage').classList.add('text-red-500');
+                document.getElementById('resultMessage').classList.remove('text-green-500');
+            }
+
+            // Avanzar a la siguiente pregunta después de 2 segundos
+            setTimeout(() => {
+                currentQuestionIndex++;
+                document.getElementById('resultMessage').textContent = ""; // Limpiar mensaje
+                loadQuestion(); // Cargar siguiente pregunta
+            }, 2000);
+        }
+
+        // Mostrar resultados al final
+        function showResults(){
+            stopTimer();
+            document.getElementById('finalScore').textContent = `Puntuación Final: ${correctAnswers} de ${totalQuestions}`;
+            document.getElementById('finalResults').classList.remove('hidden');
+            
+            // Logros desbloqueados
+            let achievements = [];
+            if (correctAnswers === totalQuestions) {
+                achievements.push("¡Logro desbloqueado! Respondiste todo correctamente.");
+            }
+            if (correctAnswers >= totalQuestions / 2) {
+                achievements.push("¡Logro desbloqueado! Más de la mitad de las respuestas fueron correctas.");
+            }
+
+            const achievementList = document.getElementById('achievementList');
+            achievementList.innerHTML = achievements.map(achievement => `
+                <li class="achievement completed">${achievement}</li>
+            `).join('');
+        }
+
+        // Función para compartir los resultados
+        document.getElementById('shareBtn').addEventListener('click', function() {
+            const shareText = `Acabo de jugar y mi puntuación final en el juego de Historia es ${correctAnswers} de ${totalQuestions}. ¡Te reto a que juegues también!`;
+            const url = encodeURIComponent(window.location.href);
+            const tweetUrl = `https://twitter.com/intent/tweet?text=${shareText}&url=${url}`;
+            window.open(tweetUrl, "_blank");
+        });
+
+        // Lógica para comenzar partida
+        document.getElementById('startBtn').addEventListener('click', function() {
+            startTimer();
+            loadQuestion();
+            this.disabled = true;  // Deshabilitar el botón de empezar
+        });
+
+        // Lógica para manejar la dificultad
+        document.getElementById('difficulty').addEventListener('change', function() {
+            console.log('Dificultad seleccionada:', this.value);
+        });
+    </script>
+</body>
+</html>

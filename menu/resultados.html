@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados del Juego</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <style>
+        .result {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .achievement {
+            margin-top: 10px;
+            color: green;
+        }
+        .compare-section {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-blue-400 via-indigo-50 to-purple-100">
+    <header class="text-center bg-gray-800 py-4 text-white">
+        <h1 class="text-3xl" data-aos="fade-left">Resultados del Juego</h1>
+        <p class="text-xl" data-aos="fade-left">Compara tus resultados y compártelos con tus amigos</p>
+    </header>
+
+    <div class="container mx-auto py-8">
+        <div id="finalResult" class="text-center">
+            <h2 class="text-2xl font-bold" data-aos="fade-up">Puntuación Final: <span id="finalScore">0</span></h2>
+        </div>
+        <div id="achievements" class="text-center mt-5">
+            <h3 class="text-xl font-bold" data-aos="fade-up">Logros Desbloqueados:</h3>
+            <ul id="achievementList" data-aos="fade-up"></ul>
+        </div>
+        <div class="compare-section">
+            <h3 class="text-xl font-bold" data-aos="fade-left">Comparación con otros usuarios:</h3>
+            <ul id="comparisonList" data-aos="fade-left"></ul>
+        </div>
+        <div class="text-center mt-5">
+            <button id="shareBtn" class="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-700 transition duration-300" data-aos="fade-left">Compartir mi Resultado</button>
+        </div>
+    </div>
+
+    <script>
+        fetch('../datos_json/resultados.json')  
+            .then(response => response.json())
+            .then(data => {
+                const playerScore = 70;
+                const playerName = "Elkinn Flores";  
+                // Mostrar puntuación final
+                document.getElementById('finalScore').textContent = playerScore;
+                // Mostrar logros
+                const player = data.usuarios.find(user => user.usuario === playerName);
+                if (player) {
+                    const achievementList = document.getElementById('achievementList');
+                    player.logros.forEach(logro => {
+                        const li = document.createElement('li');
+                        li.classList.add('achievement');
+                        li.textContent = logro;
+                        achievementList.appendChild(li);
+                    });
+                }
+                //Comparar con otros usuarios
+                const comparisonList = document.getElementById('comparisonList');
+                data.usuarios.forEach(user => {
+                    const li = document.createElement('li');
+                    li.textContent = `${user.usuario} - Puntuación: ${user.puntuacion}`;
+                    li.style.color = (user.puntuacion >= playerScore) ? 'green' : 'red';
+                    comparisonList.appendChild(li);
+                });
+                //Funcionalidad para compartir resultados
+                document.getElementById('shareBtn').addEventListener('click', function() {
+                    const shareText = `¡Mi puntuación en el juego es ${playerScore}! ¿Te atreves a superarme?`;
+                    const url = encodeURIComponent(window.location.href);
+                    const tweetUrl = `https://twitter.com/intent/tweet?text=${shareText}&url=${url}`;
+                    window.open(tweetUrl, "_blank");
+                });
+            })
+            .catch(error => console.error('Error al cargar los resultados:', error));
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+        <script>
+            AOS.init({
+                duration: 2000, 
+                easing: 'ease-out', 
+                once: true 
+            });
+        </script>
+</body>
+</html>

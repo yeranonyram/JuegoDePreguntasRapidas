@@ -1,0 +1,37 @@
+{
+    "mejoras": [
+      {
+        "id": 1,
+        "nombre": "Pista Adicional",
+        "descripcion": "Una pista adicional para ayudarte a responder preguntas difíciles.",
+        "precio": 5,
+        "tipo": "pista",
+        "disponible": true
+      },
+      {
+        "id": 2,
+        "nombre": "Tema Exclusivo - Fútbol",
+        "descripcion": "Un tema exclusivo con imágenes de fútbol.",
+        "precio": 10,
+        "tipo": "tema",
+        "disponible": true
+      },
+      {
+        "id": 3,
+        "nombre": "Avatar Personalizado - Estrella",
+        "descripcion": "Un avatar de estrella del fútbol para tu perfil.",
+        "precio": 15,
+        "tipo": "avatar",
+        "disponible": true
+      },
+      {
+        "id": 4,
+        "nombre": "Oferta Especial - Descuento 50%",
+        "descripcion": "¡Obtén un descuento del 50% en una mejora de tu elección!",
+        "precio": 20,
+        "tipo": "oferta",
+        "disponible": false
+      }
+    ]
+  }
+  

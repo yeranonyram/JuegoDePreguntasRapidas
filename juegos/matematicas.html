@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Matemáticas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .question-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .timer {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .difficulty-select {
+            margin-bottom: 20px;
+        }
+        .result {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .final-results {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <header class="text-center bg-black py-4 text-white">
+        <h1 class="text-3xl">Juego de Matemáticas</h1>
+        <p class="text-xl">¡Ponte a prueba con preguntas de matemáticas!</p>
+    </header>
+
+    <div class="container mx-auto py-8">
+        <!-- Temporizador y Dificultad -->
+        <div class="text-center mb-4">
+            <div class="difficulty-select">
+                <label for="difficulty" class="text-lg">Selecciona Dificultad:</label>
+                <select id="difficulty" class="form-select w-1/2 mx-auto p-2 mt-2 border rounded-md">
+                    <option value="easy">Fácil</option>
+                    <option value="medium">Intermedio</option>
+                    <option value="hard">Difícil</option>
+                </select>
+            </div>
+
+            <div id="timer" class="timer text-2xl font-bold mt-4">00:00</div>
+
+            <button id="startBtn" class="mt-5 bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-700 transition duration-300">Comenzar Partida</button>
+        </div>
+
+        <!-- Pregunta -->
+        <div class="question-container" id="questionContainer">
+            <!-- Las preguntas se cargarán aquí -->
+        </div>
+
+        <!-- Resultado de la respuesta -->
+        <div id="resultMessage" class="result text-center"></div>
+
+        <!-- Resultados finales -->
+        <div id="finalResults" class="final-results text-center mt-8">
+            <h2 class="text-2xl font-bold">¡Has terminado el juego!</h2>
+            <p id="finalScore" class="text-xl"></p>
+            <h3 class="text-lg font-semibold mt-4">Logros:</h3>
+            <ul id="achievementList" class="space-y-2"></ul>
+            <button id="shareBtn" class="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-700 transition duration-300 mt-5">Compartir Resultados</button>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-end p-2">
+        <a href="../menu/Juegos.html" class="text-decoration-none text-xl text-blue-500">Volver al Menú</a>
+    </div>
+
+    <script>
+        // Variables de Temporizador
+        let timer;
+        let seconds = 0;
+        let isRunning = false;
+
+        // Variables de juego
+        let correctAnswers = 0; // Contador de respuestas correctas
+        const totalQuestions = 5; // Número total de preguntas
+
+        // Preguntas de Matemáticas
+        const questions = [
+            {
+                question: "¿Cuánto es 5 + 7?",
+                options: ["10", "12", "14", "15"],
+                correctAnswer: "12"
+            },
+            {
+                question: "¿Cuánto es 9 * 6?",
+                options: ["54", "48", "56", "60"],
+                correctAnswer: "54"
+            },
+            {
+                question: "¿Cuánto es 16 ÷ 4?",
+                options: ["2", "3", "4", "5"],
+                correctAnswer: "4"
+            },
+            {
+                question: "¿Cuánto es 25 - 9?",
+                options: ["16", "18", "20", "15"],
+                correctAnswer: "16"
+            },
+            {
+                question: "¿Cuánto es 7 * 8?",
+                options: ["54", "56", "60", "58"],
+                correctAnswer: "56"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+
+        // Función para iniciar el temporizador
+        function startTimer() {
+            if (!isRunning) {
+                isRunning = true;
+                timer = setInterval(() => {
+                    seconds++;
+                    let min = Math.floor(seconds / 60);
+                    let sec = seconds % 60;
+                    document.getElementById('timer').textContent = `${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+                }, 1000);
+            }
+        }
+
+        // Función para detener el temporizador
+        function stopTimer() {
+            clearInterval(timer);
+            isRunning = false;
+        }
+
+        // Cargar la siguiente pregunta
+        function loadQuestion() {
+            if (currentQuestionIndex < questions.length) {
+                const question = questions[currentQuestionIndex];
+                let questionHTML = `
+                    <h3 class="text-2xl font-bold mb-4">${question.question}</h3>
+                    <ul class="space-y-4">
+                        ${question.options.map(option => `
+                            <li>
+                                <button class="bg-gray-200 text-lg p-3 rounded-md w-full hover:bg-gray-400 focus:outline-none" onclick="checkAnswer('${option}')">${option}</button>
+                            </li>
+                        `).join('')}
+                    </ul>
+                `;
+                document.getElementById('questionContainer').innerHTML = questionHTML;
+            } else {
+                showResults();
+            }
+        }
+
+        // Verificar respuesta
+        function checkAnswer(selectedAnswer) {
+            const currentQuestion = questions[currentQuestionIndex];
+            if (selectedAnswer === currentQuestion.correctAnswer) {
+                correctAnswers++;
+                document.getElementById('resultMessage').textContent = "¡Correcto!";
+                document.getElementById('resultMessage').classList.add('text-green-500');
+                document.getElementById('resultMessage').classList.remove('text-red-500');
+            } else {
+                document.getElementById('resultMessage').textContent = "¡Incorrecto!";
+                document.getElementById('resultMessage').classList.add('text-red-500');
+                document.getElementById('resultMessage').classList.remove('text-green-500');
+            }
+
+            // Avanzar a la siguiente pregunta después de 2 segundos
+            setTimeout(() => {
+                currentQuestionIndex++;
+                document.getElementById('resultMessage').textContent = ""; // Limpiar mensaje
+                loadQuestion(); // Cargar siguiente pregunta
+            }, 2000);
+        }
+
+        // Mostrar resultados al final
+        function showResults() {
+            stopTimer();
+            document.getElementById('finalScore').textContent = `Puntuación Final: ${correctAnswers} de ${totalQuestions}`;
+            document.getElementById('finalResults').classList.remove('final-results');
+
+            // Logros desbloqueados
+            let achievements = [];
+            if (correctAnswers === totalQuestions) {
+                achievements.push("¡Logro desbloqueado! Respondiste todo correctamente.");
+            }
+            if (correctAnswers >= totalQuestions / 2) {
+                achievements.push("¡Logro desbloqueado! Más de la mitad de las respuestas fueron correctas.");
+            }
+
+            const achievementList = document.getElementById('achievementList');
+            achievementList.innerHTML = achievements.map(achievement => `
+                <li class="achievement completed">${achievement}</li>
+            `).join('');
+        }
+
+        // Función para compartir los resultados
+        document.getElementById('shareBtn').addEventListener('click', function() {
+            const shareText = `Acabo de jugar y mi puntuación final en el juego de Matemáticas es ${correctAnswers} de ${totalQuestions}. ¡Te reto a que juegues también!`;
+            const url = encodeURIComponent(window.location.href);
+            const tweetUrl = `https://twitter.com/intent/tweet?text=${shareText}&url=${url}`;
+            window.open(tweetUrl, "_blank");
+        });
+
+        // Lógica para comenzar partida
+        document.getElementById('startBtn').addEventListener('click', function() {
+            startTimer();
+            loadQuestion();
+            this.disabled = true;  // Deshabilitar el botón de empezar
+        });
+
+        // Lógica para manejar la dificultad (actualmente no afecta las preguntas)
+        document.getElementById('difficulty').addEventListener('change', function() {
+            console.log('Dificultad seleccionada:', this.value);
+        });
+    </script>
+</body>
+</html>

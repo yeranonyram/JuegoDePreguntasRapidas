@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Registro para el Juego</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 50px;
+        }
+        #idioma {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Selector de Idioma -->
+        <div class="text-center">
+            <select id="idioma" class="form-select w-auto" onchange="cambiarIdioma()">
+                <option value="es">Español</option>
+                <option value="en">English</option>
+            </select>
+        </div>
+
+        <h2 class="text-center" id="header">Registro de Jugador</h2>
+
+        <!-- Formulario de Registro de Jugador -->
+        <form id="registroJugadorForm">
+            <div class="form-group">
+                <label for="nombre" id="labelNombre">Nombre del Jugador</label>
+                <input type="text" class="form-control" id="nombre" required placeholder="Nombre del Jugador">
+            </div>
+            <div class="form-group">
+                <label for="email" id="labelEmail">Correo Electrónico</label>
+                <input type="email" class="form-control" id="email" required placeholder="Correo Electrónico">
+            </div>
+            <div class="py-3">
+                <a href="/menu/Juegos.html" class="btn btn-primary" id="button">Registrar y Comenzar el Juego</a>
+            </div>
+        </form>
+
+        <p class="text-center mt-3" id="mensaje"></p>
+    </div>
+
+    <script>
+        // Cargar las traducciones desde un archivo JSON
+        const translations = {
+            "es": {
+                "title": "Registro para el Juego",
+                "header": "Registro de Jugador",
+                "nombre": "Nombre del Jugador",
+                "email": "Correo Electrónico",
+                "placeholder_nombre": "Nombre del Jugador",
+                "placeholder_email": "Correo Electrónico",
+                "button": "Registrar y Comenzar el Juego",
+                "mensaje": "¡Bienvenido, {nombre}! Estás registrado correctamente. Ahora puedes empezar a jugar.",
+                "error": "Por favor, completa todos los campos."
+            },
+            "en": {
+                "title": "Game Registration",
+                "header": "Player Registration",
+                "nombre": "Player Name",
+                "email": "Email Address",
+                "placeholder_nombre": "Player Name",
+                "placeholder_email": "Email Address",
+                "button": "Register and Start the Game",
+                "mensaje": "Welcome, {nombre}! You are successfully registered. You can now start playing.",
+                "error": "Please complete all fields."
+            }
+        };
+
+        // Función para cambiar el idioma
+        function cambiarIdioma() {
+            const idiomaSeleccionado = document.getElementById('idioma').value;
+            const t = translations[idiomaSeleccionado];
+
+            // Cambiar el título
+            document.title = t.title;
+            document.getElementById('pageTitle').innerText = t.title;
+
+            // Cambiar los textos del formulario
+            document.getElementById('header').innerText = t.header;
+            document.getElementById('labelNombre').innerText = t.nombre;
+            document.getElementById('labelEmail').innerText = t.email;
+            document.getElementById('nombre').placeholder = t.placeholder_nombre;
+            document.getElementById('email').placeholder = t.placeholder_email;
+            document.getElementById('button').innerText = t.button;
+        }
+
+        // Almacenar la información del jugador en localStorage
+        function registrarJugador(nombre, email) {
+            const jugador = { nombre, email };
+            localStorage.setItem('jugador', JSON.stringify(jugador));
+        }
+
+        // Verificar si ya hay un jugador registrado
+        function verificarJugador() {
+            const jugador = JSON.parse(localStorage.getItem('jugador'));
+            return jugador;
+        }
+
+        // Cuando el jugador se registre
+        document.getElementById('registroJugadorForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevenir el envío del formulario por defecto
+
+            const nombre = document.getElementById('nombre').value;
+            const email = document.getElementById('email').value;
+
+            if (nombre && email) {
+                // Guardar los datos del jugador
+                registrarJugador(nombre, email);
+
+                // Mostrar mensaje de confirmación
+                const idiomaSeleccionado = document.getElementById('idioma').value;
+                const mensaje = translations[idiomaSeleccionado].mensaje.replace("{nombre}", nombre);
+                document.getElementById('mensaje').innerHTML = mensaje;
+                
+                // Redirigir al juego después de 3 segundos
+                setTimeout(function() {
+                    window.location.href = "/juego.html"; // Redirigir al juego
+                }, 3000); // Redirige después de 3 segundos
+            } else {
+                // Mostrar mensaje si faltan campos
+                const idiomaSeleccionado = document.getElementById('idioma').value;
+                document.getElementById('mensaje').innerHTML = translations[idiomaSeleccionado].error;
+            }
+        });
+
+        // Verificar si el jugador ya está registrado al cargar la página
+        window.onload = function() {
+            const jugador = verificarJugador();
+            if (jugador) {
+                // Si ya está registrado, mostrar un mensaje
+                const idiomaSeleccionado = document.getElementById('idioma').value;
+                document.getElementById('mensaje').innerHTML = `¡Bienvenido!`;
+            }
+
+            // Cambiar idioma por defecto a Español al cargar la página
+            cambiarIdioma();
+        };
+    </script>
+</body>
+</html>

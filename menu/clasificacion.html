@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tabla de Clasificación en Modal</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+  
+  <button id="abrirModal" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+    Ver Tabla de Clasificación
+  </button>
+
+  <!-- Modal -->
+  <div id="modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-4xl">
+      <!-- Encabezado del modal -->
+      <div class="bg-blue-600 text-white text-center py-4 rounded-t-lg">
+        <h1 class="text-2xl font-bold">Tabla de Clasificación</h1>
+      </div>
+      <!-- Contenido del modal -->
+      <div class="p-4">
+        <table class="min-w-full table-auto">
+          <thead>
+            <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+              <th class="py-3 px-6 text-left">Posición</th>
+              <th class="py-3 px-6 text-left">Jugador</th>
+              <th class="py-3 px-6 text-center">Puntos</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-clasificacion" class="text-gray-700 text-sm font-light">
+            <!-- Las filas serán generadas dinámicamente -->
+          </tbody>
+        </table>
+      </div>
+      <!-- Botón para cerrar el modal -->
+      <div class="text-center py-4">
+        <button id="cerrarModal" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Botones y modal
+    const abrirModal = document.getElementById('abrirModal');
+    const cerrarModal = document.getElementById('cerrarModal');
+    const modal = document.getElementById('modal');
+
+    // Mostrar el modal
+    abrirModal.addEventListener('click', () => {
+      modal.classList.remove('hidden');
+    });
+
+    // Ocultar el modal
+    cerrarModal.addEventListener('click', () => {
+      modal.classList.add('hidden');
+    });
+
+    // Generar filas dinámicamente desde JSON
+    const tbody = document.getElementById('tabla-clasificacion');
+
+    fetch('../datos_json/clasificacion.json')
+      .then(response => response.json())
+      .then(data => {
+        data.tablaClasificacion.forEach((item) => {
+          const fila = document.createElement('tr');
+          fila.className = 'border-b border-gray-200 hover:bg-gray-100';
+
+          fila.innerHTML = `
+            <td class="py-3 px-6 text-left whitespace-nowrap">${item.posicion}</td>
+            <td class="py-3 px-6 text-left">${item.jugador}</td>
+            <td class="py-3 px-6 text-center">${item.puntos}</td>
+          `;
+
+          tbody.appendChild(fila);
+        });
+      })
+      .catch(error => console.error('Error al cargar el JSON:', error));
+  </script>
+</body>
+</html>

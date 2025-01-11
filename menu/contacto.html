@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - Soporte y Sugerencias</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .social-link {
+            display: inline-block;
+            margin-right: 15px;
+            text-decoration: none;
+            color: #1d4ed8;
+            font-weight: bold;
+        }
+        .social-link:hover {
+            color: #2563eb;
+        }
+        .contact-info {
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-blue-400 via-indigo-500 to-purple-600">
+    <header class="text-center bg-blue-800 py-4 text-white shadow-lg">
+        <h1 class="text-3xl">Contacto</h1>
+        <p class="text-xl">Estamos aquí para ayudarte. ¡No dudes en ponerte en contacto con nosotros!</p>
+    </header>
+
+    <div class="container mx-auto py-8">
+
+        <section id="soporteSection" class="contact-info text-white">
+            <h2 class="text-2xl font-bold mb-4">Soporte Técnico</h2>
+            <p><strong>Email:</strong> <span id="supportEmail"></span></p>
+            <p><strong>Teléfono:</strong> <span id="supportPhone"></span></p>
+            <p><strong>Horarios de atención:</strong> <span id="supportHours"></span></p>
+        </section>
+
+        <!-- Redes Sociales -->
+        <section id="socialMediaSection" class="contact-info text-white">
+            <h2 class="text-2xl font-bold mb-4">Síguenos en Redes Sociales</h2>
+            <div id="socialLinks">
+                <!-- Los enlaces de redes sociales  -->
+            </div>
+        </section>
+
+        <section id="suggestionsSection" class="contact-info text-white">
+            <h2 class="text-2xl font-bold mb-4">Sugerencias</h2>
+            <p id="suggestionsText" class="mb-4"></p>
+            <form id="suggestionsForm" class="space-y-4">
+                <textarea id="suggestionMessage" class="w-full p-4 border border-gray-300 rounded-md" rows="4" placeholder="Escribe tu sugerencia..."></textarea>
+                <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700">Enviar Sugerencia</button>
+            </form>
+        </section>
+
+        <section id="feedbackSection" class="contact-info text-white">
+            <h2 class="text-2xl font-bold mb-4">Feedback</h2>
+            <p id="feedbackText" class="mb-4"></p>
+            <form id="feedbackForm" class="space-y-4">
+                <textarea id="feedbackMessage" class="w-full p-4 border border-gray-300 rounded-md" rows="4" placeholder="Deja tu comentario sobre el juego..."></textarea>
+                <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-700">Enviar Feedback</button>
+            </form>
+        </section>
+
+    </div>
+
+    <script>
+        fetch('../datos_json/contacto.json') 
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('supportEmail').textContent = data.soporte_tecnico.email;
+                document.getElementById('supportPhone').textContent = data.soporte_tecnico.telefono;
+                document.getElementById('supportHours').textContent = data.soporte_tecnico.horarios;
+
+                const socialLinksContainer = document.getElementById('socialLinks');
+                data.redes_sociales.forEach(social => {
+                    const socialLink = document.createElement('a');
+                    socialLink.href = social.url;
+                    socialLink.classList.add('social-link');
+                    socialLink.textContent = social.nombre;
+                    socialLinksContainer.appendChild(socialLink);
+                });
+
+                document.getElementById('suggestionsText').textContent = data.formulario.sugerencias;
+                document.getElementById('feedbackText').textContent = data.formulario.feedback;
+            })
+            .catch(error => console.error('Error al cargar la información de contacto:', error));
+
+        document.getElementById('suggestionsForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const suggestionMessage = document.getElementById('suggestionMessage').value;
+            if (suggestionMessage.trim() === '') {
+                alert('Por favor, escribe tu sugerencia.');
+            } else {
+                alert('¡Gracias por tu sugerencia! La hemos recibido.');
+                document.getElementById('suggestionMessage').value = '';  // Limpiar campo
+            }
+        });
+
+        // Enviar formulario de feedback
+        document.getElementById('feedbackForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const feedbackMessage = document.getElementById('feedbackMessage').value;
+            if (feedbackMessage.trim() === '') {
+                alert('Por favor, deja tu comentario.');
+            } else {
+                alert('¡Gracias por tu feedback! Lo tendremos en cuenta.');
+                document.getElementById('feedbackMessage').value = '';  // Limpiar campo
+            }
+        });
+    </script>
+
+</body>
+</html>

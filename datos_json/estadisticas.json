@@ -1,0 +1,21 @@
+{
+    "jugadoresActivos": 150,
+    "temasPopulares": [
+      {"tema": "Deportes", "jugadores": 50},
+      {"tema": "Cine y Series", "jugadores": 40},
+      {"tema": "Historia", "jugadores": 30},
+      {"tema": "Cultura General", "jugadores": 20}
+    ],
+    "puntuacionesGlobales": [
+      {"nombre": "Juan", "puntuacion": 1200},
+      {"nombre": "Maria", "puntuacion": 1100},
+      {"nombre": "Carlos", "puntuacion": 1050},
+      {"nombre": "Ana", "puntuacion": 1020}
+    ],
+    "tendenciasRecientes": [
+      {"jugador": "Juan", "tema": "Deportes", "fecha": "2025-01-01"},
+      {"jugador": "Maria", "tema": "Cine y Series", "fecha": "2025-01-02"},
+      {"jugador": "Carlos", "tema": "Historia", "fecha": "2025-01-03"}
+    ]
+  }
+  

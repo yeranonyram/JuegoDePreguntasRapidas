@@ -1,0 +1,26 @@
+[
+    {
+        "nombre": "Yerko Flores",
+        "puntaje":75
+    },
+    {
+        "nombre": "Maria Lopez",
+        "puntaje": 65
+    },
+    {
+        "nombre": "Eddy Torrejon",
+        "puntaje": 80
+    },
+    {
+        "nombre": "Paola Guitierrez",
+        "puntaje": 60
+    },
+    {
+        "nombre": "Abigail Tacuri",
+        "puntaje": 100
+    },
+    {
+        "nombre": "Elkinn Flores",
+        "puntaje": 70
+    }
+]

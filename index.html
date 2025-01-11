@@ -1,0 +1,375 @@
+<html>
+    <head>
+        <title>Menu propio</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    </head>
+    <body class="bg-success-subtle" style="background-image: url('./img/img4.jpg'); background-size: cover; background-position: center;">
+
+        <audio autoplay>
+            <source src="./audio/JuegoPreguntas.mp3" type="audio/mp3">
+        </audio>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+			<div class="container-fluid ">
+				<a class="navbar-brand fs-3" href="#">Juego De Preguntas Rapidas</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse text fs-6 d-flex justify-content-end" id="navbarNavAltMarkup">
+					<div class="navbar-nav" id="menu">
+                        <!-- Aquí tu XML dinámico -->
+					</div>
+				</div>
+			</div>
+		</nav>
+
+        <div id="carouselExampleDark" class="carousel slide carousel-dark p-lg-5" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner p-5 text-center">
+                <div class="carousel-item" data-bs-interval="2000">
+                    <video src="./video/video1.mp4" class="d-block mx-auto w-50 h-auto shadow-lg" autoplay muted loop></video>
+                </div>
+                <div class="carousel-item active" data-bs-interval="2000">
+                    <video src="./video/video2.mp4" class="d-block mx-auto w-90 h-50  shadow-lg" autoplay muted loop></video>
+                </div>
+                <div class="carousel-item " data-bs-interval="2000">
+                    <video src="./video/video.mp4" class="d-block mx-auto w-90 h-50 border shadow-lg" autoplay muted loop></video>
+                </div>
+            </div>
+            <!-- Controles del carrusel -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script>
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", "./menu_xml/menu.xml", true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    const xmlDoc = xhr.responseXML;
+                    const items = xmlDoc.getElementsByTagName("item");
+                    let menuHTML = "";
+        
+                    // Iterar sobre los elementos del menú
+                    for (let i = 0; i < items.length; i++) {
+                        const nombre = items[i].getElementsByTagName("nombre")[0].textContent;
+                        const link = items[i].getElementsByTagName("link")[0].textContent;
+                        const submenu = items[i].getElementsByTagName("submenu")[0];  // Verificar si tiene un submenú
+                        // Si el item tiene un submenú
+                        if (submenu) {
+                            menuHTML += `
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        ${nombre}
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            `;
+        
+                            // Iterar sobre los submenús
+                            const subItems = submenu.getElementsByTagName("item");
+                            for (let j = 0; j < subItems.length; j++) {
+                                const subNombre = subItems[j].getElementsByTagName("nombre")[0].textContent;
+                                const subLink = subItems[j].getElementsByTagName("link")[0].textContent;
+                                menuHTML += `
+                                    <li><a class="dropdown-item" href="${subLink}">${subNombre}</a></li>
+                                `;
+                            }
+        
+                            menuHTML += `</ul></li>`; // Cerrar dropdown
+                        } else {
+                            // Si no tiene submenú, agregar simplemente un item de menú
+                            menuHTML += `
+                                <li class="nav-item">
+                                    <a class="nav-link" href="${link}">${nombre}</a>
+                                </li>
+                            `;
+                        }
+                    }
+        
+                    // Insertar el contenido generado en el HTML
+                    document.getElementById("menu").innerHTML = menuHTML;
+                } else {
+                    console.error("Error al cargar el archivo XML");
+                }
+            };
+            xhr.send();
+        </script>
+
+        <div class="container-fluid py-2" >
+            <div class="container py-5">
+                <!-- Introducción -->
+                <h2 class="text-center text-black fw-bold mb-4" data-aos="fade-left">Introducción al Juego</h2>
+                <p class="text-center fs-5 text-muted" data-aos="fade-left">
+                    Bienvenido a <span class="fw-bold text-dark">"Juego de Preguntas Rápidas"</span>, donde podrás desafiar tus conocimientos en diversos temas mientras compites contra otros jugadores.
+                    <br>
+                    La dinámica es simple: <span class="fw-bold text-dark">responde correctamente a tantas preguntas como puedas</span> dentro del tiempo limitado.
+                </p>
+            
+                <!-- Reglas Básicas -->
+                <div class="mt-5">
+                    <h3 class="text-center text-black fw-bold mb-4" data-aos="fade-left">Reglas Básicas</h3>
+                    <ul class="list-group mx-auto" style="max-width: 600px;" data-aos="fade-left">
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill text-success me-3"></i>
+                            <span>Debes elegir un tema y empezar a responder preguntas.</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="bi bi-clock-fill text-warning me-3"></i>
+                            <span>Cada pregunta tiene un tiempo límite para responder.</span>
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="bi bi-graph-up-arrow text-info me-3"></i>
+                            <span>Las respuestas correctas suman puntos, pero las respuestas incorrectas restan.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+    
+             <!-- Contenido Principal -->
+             <h2 class="text-center" data-aos="fade-left">Pregunta de Geografía</h2>
+             <p class="text-center" data-aos="fade-left">Pregunta: ¿Cuál es la capital de España?</p>
+             <div class=" d-flex align-items-center justify-content-center p-2">
+                <form class="d-flex flex-column align-items-start p-4 shadow-sm bg-info " data-aos="fade-up">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="opcionA">
+                        <label class="form-check-label" for="opcionA">A. Madrid</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="opcionB">
+                        <label class="form-check-label" for="opcionB">B. Barcelona</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="opcionC">
+                        <label class="form-check-label" for="opcionC">C. Sevilla</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="opcionD">
+                        <label class="form-check-label" for="opcionD">D. Valencia</label>
+                    </div>
+                    <button type="button" class="btn btn-success mt-3" onclick="verificarRespuesta()">Ver Respuesta</button>
+                </form>
+             </div>
+             <div id="resultado" class="mt-4 text-center"></div>
+             <div id="respuesta" class="respuesta text-center"></div>
+         </div>
+     
+         <script>
+             function verificarRespuesta() {
+                 // Obtener las opciones seleccionadas
+                 const opcionA = document.getElementById('opcionA');
+                 const opcionB = document.getElementById('opcionB');
+                 const opcionC = document.getElementById('opcionC');
+                 const opcionD = document.getElementById('opcionD');
+                 document.getElementById('resultado').innerHTML = '';
+                 document.getElementById('respuesta').innerHTML = '';
+                 let respuestaCorrecta = false;
+                 let respuestaSeleccionada = "";
+                 // Comprobar si el usuario seleccionó la respuesta correcta 
+                 if (opcionA.checked) {
+                     opcionA.parentNode.classList.add('correcto');
+                     respuestaSeleccionada = "A. Madrid";
+                     respuestaCorrecta = true; 
+                 } else {
+                     opcionA.parentNode.classList.remove('correcto');
+                 }
+     
+                 // Comprobar si el usuario seleccionó respuestas incorrectas
+                 if (opcionB.checked) {
+                     opcionB.parentNode.classList.add('incorrecto');
+                     if (!respuestaSeleccionada) respuestaSeleccionada = "B. Barcelona";
+                     respuestaCorrecta = false;  
+                 } else {
+                     opcionB.parentNode.classList.remove('incorrecto');
+                 }
+     
+                 if (opcionC.checked) {
+                     opcionC.parentNode.classList.add('incorrecto');
+                     if (!respuestaSeleccionada) respuestaSeleccionada = "C. Sevilla";
+                     respuestaCorrecta = false;  
+                 } else {
+                     opcionC.parentNode.classList.remove('incorrecto');
+                 }
+     
+                 if (opcionD.checked) {
+                     opcionD.parentNode.classList.add('incorrecto');
+                     if (!respuestaSeleccionada) respuestaSeleccionada = "D. Valencia";
+                     respuestaCorrecta = false; 
+                 } else {
+                     opcionD.parentNode.classList.remove('incorrecto');
+                 }
+     
+                 // Mostrar el mensaje de la respuesta correcta o incorrecta
+                 if (respuestaCorrecta) {
+                     document.getElementById('respuesta').innerHTML = '¡Correcto! La respuesta es: <strong>A. Madrid</strong>';
+                     document.getElementById('respuesta').classList.add('correcta');
+                     document.getElementById('respuesta').classList.remove('incorrecta');
+                 } else {
+                     document.getElementById('respuesta').innerHTML = 'Incorrecto. La respuesta correcta es: <strong>A. Madrid</strong>';
+                     document.getElementById('respuesta').classList.add('incorrecta');
+                     document.getElementById('respuesta').classList.remove('correcta');
+                 }
+     
+                 // Mostrar la opción seleccionada por el usuario
+                 document.getElementById('resultado').innerHTML = `Has seleccionado: <strong>${respuestaSeleccionada}</strong>`;
+             }
+         </script>
+
+            <h3 class="mt-5 text-center p-2" data-aos="fade-up">Tabla de Clasificación</h3>
+            <p class="text-center" data-aos="fade-up">Consulta la tabla para ver cómo te comparas con otros jugadores.</p>
+        </div>
+
+        <div class="d-flex flex-column justify-content-center flex-md-row border-black gap-2" data-aos="fade-up">
+            <div class="btn btn-success shadow-sm mb-3 mb-md-0">
+                <a href="./menu/Juegos.html" class="text-decoration-none fs-3 fw-bolder text-light w-100 text-center">Comenzar el Juego</a>
+            </div>
+            <button id="abrirModal" class="btn btn-warning shadow-sm fs-4 fw-bold">
+                Ver Tabla de Clasificación
+            </button>
+
+        </div>
+
+
+  <!-- Modal -->
+  <div id="modal" class="modal fade" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <!-- Encabezado del modal -->
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title" id="modalLabel">Tabla de Clasificación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <!-- Cuerpo del modal -->
+        <div class="modal-body">
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr class="table-secondary">
+                <th>Posición</th>
+                <th>Jugador</th>
+                <th>Puntos</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-clasificacion">
+              <!-- Las filas se generarán dinámicamente -->
+            </tbody>
+          </table>
+        </div>
+        <!-- Pie del modal -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Inicializar modal de Bootstrap
+    const modalElement = new bootstrap.Modal(document.getElementById('modal'));
+
+    // Generar filas dinámicamente desde JSON
+    const tbody = document.getElementById('tabla-clasificacion');
+
+    // Botón para abrir el modal
+    const abrirModal = document.getElementById('abrirModal');
+
+    // Evento para abrir el modal
+    abrirModal.addEventListener('click', () => {
+      modalElement.show();
+    });
+
+    // Cargar datos del archivo JSON
+    fetch('./datos_json/clasificacion.json')
+      .then(response => response.json())
+      .then(data => {
+        data.tablaClasificacion.forEach((item) => {
+          const fila = document.createElement('tr');
+
+          fila.innerHTML = `
+            <td>${item.posicion}</td>
+            <td>${item.jugador}</td>
+            <td>${item.puntos}</td>
+          `;
+
+          tbody.appendChild(fila);
+        });
+      })
+      .catch(error => console.error('Error al cargar el JSON:', error));
+  </script>
+
+        <div class="text-center p-5" data-aos="fade-up">
+            <h3>"El conocimiento es poder. ¡Demuestra lo que sabes y diviértete jugando!"</h3>
+        </div>
+
+        <select id="idioma">
+            <option value="es">Espanol</option>
+            <option value="en">English</option>
+            <option value="eu">Euskera</option>
+        </select>
+
+       <script>
+        let xmlDoc = null;
+
+        function cargaXML(callback) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", "internacional.xml", true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    const parser = new DOMParser();
+                    xmlDoc = parser.parseFromString(xhr.responseText, "application/xml");
+                    callback();
+                } else {
+                    console.error("No se pudo cargar el archivo XML.");
+                }
+            };
+            xhr.send();
+        }
+
+        function cambioLenguaje(lenguaje) {
+            if (!xmlDoc) return;
+
+            const menu = document.getElementById("menu");
+            const items = xmlDoc.getElementsByTagName("item");
+            menu.innerHTML = ""; // Limpiar el menú
+
+            Array.from(items).forEach(item => {
+                const nombre = item.getElementsByTagName(lenguaje)[0]?.textContent;
+                const link = item.getElementsByTagName("link")[0]?.textContent;
+
+                if (nombre && link) {
+                    const li = document.createElement("li");
+                    const a = document.createElement("a");
+                    a.textContent = nombre;
+                    a.href = link;
+                    li.appendChild(a);
+                    menu.appendChild(li);
+                }
+            });
+        }
+
+        document.getElementById('idioma').addEventListener('change', (event) => {
+            cambioLenguaje(event.target.value);
+        });
+
+        cargaXML(() => {
+            cambioLenguaje('es'); // Idioma por defecto
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 2000, 
+            easing: 'ease-out', 
+            once: true 
+        });
+    </script>
+</body>
+</html>

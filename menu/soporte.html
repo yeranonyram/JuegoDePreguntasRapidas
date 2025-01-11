@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ y Soporte</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+
+    <style>
+        .faq-item {
+            border: 1px solid #e2e8f0;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: white;
+            border-radius: 8px;
+        }
+        .faq-item .answer {
+            display: none;
+            margin-top: 10px;
+            color: #4a5568;
+        }
+        .faq-item.active .answer {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-teal-500 to-lime-300">
+
+    <header class="text-center bg-blue-800 py-4 text-white shadow-lg">
+        <h1 class="text-3xl " data-aos="fade-left">FAQ y Soporte</h1>
+        <p class="text-xl" data-aos="fade-left">Aquí podrás encontrar respuestas a tus preguntas y soporte adicional.</p>
+    </header>
+
+    <div class="container mx-auto py-8">
+        <section id="faqSection">
+            <h2 class="text-2xl font-bold mb-6">Preguntas Frecuentes (FAQ)</h2>
+            <div id="faqList" class="space-y-4">
+                <!-- Las preguntas aquí -->
+            </div>
+        </section>
+        <section id="supportSection" class="mt-12">
+            <h2 class="text-2xl font-bold mb-6">Reportar Error</h2>
+            <form id="reportForm" class="space-y-4">
+                <textarea id="errorDescription" class="w-full p-4 border border-gray-300 rounded-md" rows="4" placeholder="Describe el error o problema que has encontrado..."></textarea>
+                <button type="submit" class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-700">Reportar Error</button>
+            </form>
+        </section>
+        <section id="settingsSection" class="mt-12">
+            <h2 class="text-2xl font-bold mb-6">Configuraciones del Juego</h2>
+            <div class="space-y-4">
+                <div>
+                    <label for="sound" class="text-lg">Sonido</label>
+                    <input type="checkbox" id="sound" class="ml-2">
+                </div>
+                <div>
+                    <label for="notifications" class="text-lg">Notificaciones</label>
+                    <input type="checkbox" id="notifications" class="ml-2">
+                </div>
+                <div>
+                    <label for="language" class="text-lg">Idioma</label>
+                    <select id="language" class="ml-2 p-2 border border-gray-300 rounded-md">
+                        <option value="es">Español</option>
+                        <option value="en">Inglés</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+
+        fetch('../datos_json/faq_soporte.json') 
+            .then(response => response.json())
+            .then(data => {
+                const faqList = document.getElementById('faqList');
+                data.faq.forEach(faq => {
+                    const faqItem = document.createElement('div');
+                    faqItem.classList.add('faq-item');
+                    faqItem.innerHTML = `
+                        <h3 class="text-lg font-semibold cursor-pointer" onclick="toggleAnswer(${faq.id})">${faq.pregunta}</h3>
+                        <p class="answer">${faq.respuesta}</p>
+                    `;
+                    faqList.appendChild(faqItem);
+                });
+
+                const settings = data.configuraciones;
+                document.getElementById('sound').checked = settings.sonido;
+                document.getElementById('notifications').checked = settings.notificaciones;
+                document.getElementById('language').value = settings.lenguaje;
+            })
+        .catch(error => console.error('Error al cargar las FAQ y soporte:', error));
+
+        // Función para alternar la respuesta de una pregunta
+        function toggleAnswer(id) {
+            const faqItem = document.querySelector(`.faq-item:nth-child(${id})`);
+            faqItem.classList.toggle('active');
+        }
+
+        // Enviar el formulario de reporte de errores
+        document.getElementById('reportForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const description = document.getElementById('errorDescription').value;
+            if (description.trim() === '') {
+                alert('Por favor, proporciona una descripción del error.');
+            } else {
+                alert('¡Gracias por reportar el error! Nuestro equipo lo revisará.');
+                document.getElementById('errorDescription').value = '';  // Limpiar campo
+            }
+        });
+
+        // Guardar configuraciones
+        document.getElementById('sound').addEventListener('change', function() {
+            // Aquí puedes guardar el valor de las configuraciones en el almacenamiento local o base de datos
+            console.log('Sonido habilitado:', this.checked);
+        });
+        
+        document.getElementById('notifications').addEventListener('change', function() {
+            console.log('Notificaciones habilitadas:', this.checked);
+        });
+
+        document.getElementById('language').addEventListener('change', function() {
+            console.log('Idioma seleccionado:', this.value);
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 2000, 
+            easing: 'ease-out', 
+            once: true 
+        });
+    </script>
+</body>
+</html>

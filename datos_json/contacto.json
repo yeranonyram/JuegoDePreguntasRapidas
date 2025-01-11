@@ -1,0 +1,26 @@
+{
+    "soporte_tecnico": {
+      "email": "soporte@toxicusfumo.com",
+      "telefono": "+59175732297",
+      "horarios": "Lunes a Viernes de 9:00 AM a 6:00 PM"
+    },
+    "redes_sociales": [
+      {
+        "nombre": "Facebook",
+        "url": "https://www.facebook.com/yerkoflores"
+      },
+      {
+        "nombre": "Twitter",
+        "url": "https://twitter.com/yerkoflores"
+      },
+      {
+        "nombre": "Instagram",
+        "url": "https://instagram.com/yerkoflores"
+      }
+    ],
+    "formulario": {
+      "sugerencias": "¿Tienes alguna sugerencia para mejorar el juego? ¡Nos encantaría saber tu opinión!",
+      "feedback": "¿Cómo calificarías tu experiencia con el juego? Tu feedback es importante para nosotros."
+    }
+  }
+  

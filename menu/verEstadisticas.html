@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estadísticas del Juego</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .statistics-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300">
+
+    <div class="container mx-auto py-8">
+        <h1 class="text-3xl font-bold text-center mb-8">Estadísticas del Juego</h1>
+        <div class="statistics-card">
+            <h2 class="text-xl font-bold mb-4">Jugadores Activos</h2>
+            <p id="activePlayers" class="text-lg">Cargando...</p>
+        </div>
+        <div class="statistics-card">
+            <h2 class="text-xl font-bold mb-4">Temas Populares</h2>
+            <ul id="popularTopics" class="text-lg">Cargando...</ul>
+        </div>
+        <div class="statistics-card">
+            <h2 class="text-xl font-bold mb-4">Puntuaciones Globales</h2>
+            <ul id="globalScores" class="text-lg">Cargando...</ul>
+        </div>
+        <div class="statistics-card">
+            <h2 class="text-xl font-bold mb-4">Tendencias Recientes</h2>
+            <ul id="recentTrends" class="text-lg">Cargando...</ul>
+        </div>
+
+    </div>
+
+    <script>
+        fetch('../datos_json/estadisticas.json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('activePlayers').textContent = `${data.jugadoresActivos} Jugadores Activos`;
+                const popularTopics = data.temasPopulares.map(topic => `
+                    <li>${topic.tema}: ${topic.jugadores} jugadores</li>
+                `).join('');
+                document.getElementById('popularTopics').innerHTML = popularTopics;
+                const globalScores = data.puntuacionesGlobales.map(score => `
+                    <li>${score.nombre}: ${score.puntuacion} puntos</li>
+                `).join('');
+                document.getElementById('globalScores').innerHTML = globalScores;
+                const recentTrends = data.tendenciasRecientes.map(trend => `
+                    <li>${trend.jugador} jugó en el tema '${trend.tema}' el ${trend.fecha}</li>
+                `).join('');
+                document.getElementById('recentTrends').innerHTML = recentTrends;
+            })
+            .catch(error => {
+                console.error("Error al cargar el archivo JSON:", error);
+                document.getElementById('activePlayers').textContent = "No se pudo cargar la información.";
+            });
+    </script>
+
+</body>
+</html>

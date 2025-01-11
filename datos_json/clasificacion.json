@@ -1,0 +1,35 @@
+{
+    "tablaClasificacion": 
+    [
+        {
+            "posicion": 1,
+            "jugador": "Yerko Flores",
+            "puntos": 75
+        },
+        {
+            "posicion": 2,
+            "jugador": "Maria Lopez",
+            "puntos": 65
+        },
+        {
+            "posicion": 3,
+            "jugador": "Eddy Torrejon",
+            "puntos": 80
+        },
+        {
+            "posicion": 4,
+            "jugador": "Paola Guitierrez",
+            "puntos": 60
+        },
+        {
+            "posicion": 5,
+            "jugador": "Abigail Tacuri",
+            "puntos": 100
+        },
+        {
+            "posicion": 6,
+            "jugador": "Elkinn Flores",
+            "puntos": 70
+        }
+    ]
+}

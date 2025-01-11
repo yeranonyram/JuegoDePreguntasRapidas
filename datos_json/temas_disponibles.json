@@ -1,0 +1,22 @@
+{
+    "categoriasDePreguntas": [
+      {"categoria": "Deportes", "descripcion": "Preguntas sobre deportes en general, desde fútbol hasta tenis."},
+      {"categoria": "Cine y Series", "descripcion": "Preguntas sobre películas, series de televisión y actores."},
+      {"categoria": "Historia", "descripcion": "Preguntas sobre eventos históricos, figuras famosas y periodos clave."},
+      {"categoria": "Cultura General", "descripcion": "Preguntas sobre una variedad de temas, desde ciencia hasta arte."}
+    ],
+    "actualizacionesSemanales": [
+      {"fecha": "2025-01-01", "descripcion": "Se añadieron nuevas preguntas sobre los Juegos Olímpicos."},
+      {"fecha": "2025-01-08", "descripcion": "Actualización en el tema de Historia con preguntas sobre la Edad Media."},
+      {"fecha": "2025-01-15", "descripcion": "Nuevas preguntas sobre los superhéroes más populares en Cine y Series."}
+    ],
+    "temasSugeridos": [
+      {"tema": "Geografía", "motivo": "Muchos jugadores han pedido preguntas sobre países y capitales."},
+      {"tema": "Tecnología", "motivo": "Las tendencias tecnológicas y los avances en la ciencia son populares."}
+    ],
+    "votacionesDeUsuarios": [
+      {"tema": "Deportes", "votos": 120, "porcentaje": 60},
+      {"tema": "Cine y Series", "votos": 80, "porcentaje": 40}
+    ]
+  }
+  

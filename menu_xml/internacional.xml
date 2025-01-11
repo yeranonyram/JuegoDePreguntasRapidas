@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<translations>
+  <menu>
+    <item>
+      <nombre id="es">Inicio</es>
+      <en>Home</en>
+      <link>index.html</link>
+    </item>
+    <item>
+      <es>Iniciar juego</es>
+      <en>Start Game</en>
+      <link>/menu/Juegos.html</link>
+    </item>
+    <item>
+      <es>Resultados</es>
+      <en>Results</en>
+      <link>/menu/resultados.html</link>
+    </item>
+    <item>
+      <es>Temas Disponibles</es>
+      <en>Available Topics</en>
+      <link>/menu/temasDisponibles.html</link>
+    </item>
+    <item>
+      <es>Tienda de Mejoras</es>
+      <en>Upgrade Store</en>
+      <link>/menu/tienda.html</link>
+    </item>
+    <item>
+      <es>FAQ y Soporte</es>
+      <en>FAQ and Support</en>
+      <link>/menu/soporte.html</link>
+    </item>
+    <item>
+      <es>Contacto</es>
+      <en>Contact</en>
+      <link>/menu/contacto.html</link>
+    </item>
+  </menu>
+
+  <text id="educontenido">
+    <es>Juego De Preguntas Rapidas</es>
+    <en>Quick Questions Game</en>
+  </text>
+  <text id="introsection">
+    <es>Introducción al juego</es>
+    <en>Introduction to the Game</en>
+  </text>
+  <text id="bienvenidoJuego">
+    <es>Bienvenido a "Juego de Preguntas Rápidas", donde podrás desafiar tus conocimientos en diversos temas mientras compites contra otros jugadores. La dinámica es simple: responder correctamente a tantas preguntas como puedas dentro del tiempo limitado.</es>
+    <en>Welcome to "Quick Questions Game", where you can challenge your knowledge on various topics while competing against other players. The game mechanics are simple: answer as many questions correctly as you can within the time limit.</en>
+  </text>
+  <text id="rulesSection">
+    <es>Reglas Básicas</es>
+    <en>Basic Rules</en>
+  </text>
+  <text id="reglasBasicas">
+    <es>Debes elegir un tema y empezar a responder preguntas. Cada pregunta tiene un tiempo límite para responder. Las respuestas correctas suman puntos, pero las respuestas incorrectas restan.</es>
+    <en>You must choose a topic and start answering questions. Each question has a time limit to answer. Correct answers add points, but incorrect answers subtract points.</en>
+  </text>
+</translations>
